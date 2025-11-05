@@ -1,39 +1,46 @@
 package com.example.huertohogarapp.navigation
 
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.huertohogarapp.screen.FormularioScreen
-import com.example.huertohogarapp.screen.ResumenScreen
-import com.example.huertohogarapp.viewmodel.FormularioViewModel
+import com.example.huertohogarapp.ui.components.HuertoBottomBar
+import com.example.huertohogarapp.ui.components.HuertoTopBar
 
+/**
+ * Punto de entrada de navegación de la app.
+ * Crea el NavController, muestra TopBar y BottomBar,
+ * y delega las pantallas a HuertoNavGraph.
+ */
 @Composable
 fun AppNavigation() {
-    // Controlador de navegación
     val navController = rememberNavController()
 
-    // ViewModel que mantiene el estado del formulario
-    val viewModel: FormularioViewModel = viewModel()
-
-    // Gráfico de navegación
-    NavHost(
-        navController = navController,
-        startDestination = "formulario"
-    ) {
-        composable("formulario") {
-            // Pantalla principal del formulario
-            FormularioScreen(
-                onEnviar = { navController.navigate("resumen") },
-                viewModel = viewModel
+    Scaffold(
+        topBar = { HuertoTopBar() },
+        bottomBar = {
+            HuertoBottomBar(
+                onHome = {
+                    navController.navigate(Screen.Inicio.route) {
+                        popUpTo(Screen.Inicio.route) { inclusive = false }
+                    }
+                },
+                onCatalogo = {
+                    navController.navigate(Screen.Catalogo.route) {
+                        popUpTo(Screen.Inicio.route) { inclusive = false }
+                    }
+                },
+                onPerfil = {
+                    navController.navigate(Screen.Perfil.route) {
+                        popUpTo(Screen.Inicio.route) { inclusive = false }
+                    }
+                }
             )
         }
-
-        composable("resumen") {
-            // Obtenemos el estado actual del formulario desde el ViewModel
-            val estado = viewModel.uiState.value
-            ResumenScreen(estado)
-        }
+    ) { innerPadding ->
+        HuertoNavGraph(
+            navController = navController,
+            innerPadding = innerPadding
+        )
     }
 }
