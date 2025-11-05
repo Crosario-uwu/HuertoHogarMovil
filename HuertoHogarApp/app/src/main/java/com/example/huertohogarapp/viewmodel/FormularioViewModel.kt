@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class FormularioViewModel : ViewModel() {
-
     // Estado del formulario (nombre, correo, errores, enviado)
     private val _uiState = MutableStateFlow(FormularioUiState())
     val uiState: StateFlow<FormularioUiState> = _uiState
