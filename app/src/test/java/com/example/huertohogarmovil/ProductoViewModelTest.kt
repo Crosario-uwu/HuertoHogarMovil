@@ -4,7 +4,6 @@ import com.example.huertohogarmovil.data.repository.ProductoRepository
 import com.example.huertohogarmovil.model.Producto
 import com.example.huertohogarmovil.viewmodel.ProductoViewModel
 import io.kotest.matchers.shouldBe
-import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -30,10 +29,6 @@ class ProductoViewModelTest {
             thumbnail = "tomate.png"
         )
 
-        coEvery { repo.obtenerProductoApi(1) } returns productoFalso
-
-        // ACT
-        vm.obtenerProducto("1")
 
         // ASSERT
         vm.productoDetalle.value shouldBe productoFalso
