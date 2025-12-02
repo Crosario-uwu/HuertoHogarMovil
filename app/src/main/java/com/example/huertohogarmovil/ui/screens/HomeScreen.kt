@@ -16,6 +16,10 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.huertohogarmovil.model.Producto
 import com.example.huertohogarmovil.ui.navigation.AppScreen
 import com.example.huertohogarmovil.viewmodel.ProductoViewModel
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,6 +46,33 @@ fun HomeScreen(
             TopAppBar(
                 title = { Text("Huerto Hogar") },
             )
+        },
+
+        // 🚀 BOTONES FLOTANTES AÑADIDOS AQUÍ (NO SE MODIFICÓ NADA MÁS)
+        floatingActionButton = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.End
+            ) {
+
+                FloatingActionButton(
+                    onClick = { navController.navigate("perfil") }
+                ) {
+                    Icon(Icons.Default.Person, contentDescription = "Perfil")
+                }
+
+                FloatingActionButton(
+                    onClick = { navController.navigate("carrito") }
+                ) {
+                    Icon(Icons.Default.ShoppingCart, contentDescription = "Carrito")
+                }
+
+                ExtendedFloatingActionButton(
+                    onClick = { navController.navigate("agregarProducto") },
+                    text = { Text("Agregar") },
+                    icon = { Icon(Icons.Default.Add, contentDescription = "Agregar producto") }
+                )
+            }
         }
     ) { padding ->
 
