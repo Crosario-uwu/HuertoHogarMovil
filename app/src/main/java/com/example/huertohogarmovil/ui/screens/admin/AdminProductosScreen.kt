@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.example.huertohogarmovil.model.Producto
 import com.example.huertohogarmovil.ui.navigation.AppScreen
 import com.example.huertohogarmovil.viewmodel.ProductoViewModel

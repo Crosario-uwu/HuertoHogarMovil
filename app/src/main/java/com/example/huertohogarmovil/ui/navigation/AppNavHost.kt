@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import androidx.navigation.NavType
 import com.example.huertohogarmovil.ui.navigation.AppScreen.*
 import com.example.huertohogarmovil.viewmodel.*
 import com.example.huertohogarmovil.ui.screens.*
@@ -44,10 +46,14 @@ fun AppNavHost(
             HomeScreen(navController, productoVM)
         }
 
-        // ------------------ DETALLE DE PRODUCTO (USER + ADMIN)
-        composable(ProductoDetalle.route) { backStack ->
-            val code = backStack.arguments?.getString("code") ?: ""
-
+        // ------------------ DETALLE PRODUCTO ------------------
+        composable(
+            route = "productoDetalle/{code}",
+            arguments = listOf(
+                navArgument("code") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("code") ?: ""
             ProductoDetalleScreen(
                 navController = navController,
                 code = code,
@@ -69,36 +75,25 @@ fun AppNavHost(
         }
 
         composable(EditarPerfil.route) {
-            EditarPerfilScreen(perfilVM, authVM)
+            EditarPerfilScreen(navController, perfilVM, authVM)
         }
 
         // ------------------ ADMIN AREA ------------------
 
-        // HOME ADMIN
         composable(HomeAdmin.route) {
             AdminHomeScreen(navController, adminVM)
         }
 
-        // LISTA DE USUARIOS (ADMIN)
         composable(AdminUsuarios.route) {
             AdminUsuariosScreen(navController, adminVM)
         }
 
-        // LISTA / GESTIÓN DE PRODUCTOS (ADMIN)
         composable(AdminProductos.route) {
             AdminGestionProductosScreen(navController, productoVM)
         }
 
-
-        // ESCÁNER DE PRODUCTO (ADMIN)
         composable(AdminScan.route) {
             AdminScanProductoScreen(navController, productoVM)
         }
-
-
-
-
-
     }
-
 }

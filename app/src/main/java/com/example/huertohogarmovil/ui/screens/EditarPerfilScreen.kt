@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.huertohogarmovil.ui.utils.Validators
 import com.example.huertohogarmovil.viewmodel.AuthViewModel
 import com.example.huertohogarmovil.viewmodel.PerfilViewModel
@@ -13,10 +14,10 @@ import com.example.huertohogarmovil.viewmodel.PerfilViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditarPerfilScreen(
+    navController: NavHostController,
     perfilVM: PerfilViewModel,
-    authVM: AuthViewModel,
-
-    ) {
+    authVM: AuthViewModel
+) {
     val usuario by perfilVM.user.collectAsState()
     val loading by perfilVM.loading.collectAsState()
     val error by perfilVM.error.collectAsState()

@@ -21,7 +21,7 @@ class Converters {
         if (data == null) return null
         val type = object : TypeToken<CardInfo>() {}.type
         return gson.fromJson(data, type)
-    }
++5    }
     @TypeConverter
     fun fromMetodoPago(value: MetodoPago): String = value.name
 
