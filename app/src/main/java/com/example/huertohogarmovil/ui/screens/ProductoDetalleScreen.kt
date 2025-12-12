@@ -4,8 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
+import com.example.huertohogarmovil.R
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +43,14 @@ fun ProductoDetalleScreen(
         topBar = {
             TopAppBar(
                 title = { Text(producto?.title ?: "Producto") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Volver"
+                        )
+                    }
+                },
                 actions = {
                     IconButton(onClick = {
                         navController.navigate(AppScreen.Carrito.route)
@@ -80,12 +90,10 @@ fun ProductoDetalleScreen(
             // 🔥 Cargar imagen del drawable (Room guarda nombre del archivo)
             val context = LocalContext.current
             val imgRes = remember(item.thumbnail) {
-                context.resources.getIdentifier(
-                    item.thumbnail,
-                    "drawable",
-                    context.packageName
-                )
+                val res = context.resources.getIdentifier(item.thumbnail, "drawable", context.packageName)
+                if (res != 0) res else R.drawable.ic_launcher_foreground
             }
+
 
             Image(
                 painter = rememberAsyncImagePainter(imgRes),
@@ -140,7 +148,10 @@ fun ProductoDetalleScreen(
                     )
 
                     carritoVM.agregarProducto(entity, userId = 1)
+
+                    navController.navigate(AppScreen.Carrito.route)
                 },
+
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp)
             ) {
